@@ -1,0 +1,25 @@
+1. composer require laravel-shift/blueprint
+    php artisan blueprint:new
+    -buat rancangan skema dengan bantuan AI
+    tolong buatkan rancangan model untuk aplikasi cargo express untuk multi cabang 
+    tiap cabang memiliki kasir operasional untuk menerima order di outlet 
+    dan kurir penjemput,pengantar, mobil penjemput dan pengantar, 
+    untuk setiap gudang pusat ada disetiap kelurahan, gudang pusat kota, 
+    dan provinsi, setiap divisi tadi memiliki fitur checker 
+    untuk memastikan proses pengiriman barang di traking baik jumlah 
+    maupun keadaannya
+    php artisan blueprint:build
+    -build skema yang sudah dirancang
+    php artisan blueprint:erase
+    - jika ada kesalahan erase dulu lalu build ulang
+2. composer require livewire/livewire
+3. php artisan make:livewire counter
+4. composer require filament/filament
+5. php artisan filament:install --panels
+6. php artisan migrate
+7. php artisan make:filament-user
+8. php artisan filament:optimize-clear dan aktifkan opcache dan zip diserver
+9. php artisan make:filament-resource Customer --generate
+10.  php artisan make:filament-relation-manager OrderResource OrderItem code (defauldt ID)
+untuk hak akses cari di menu plugin shield
+11. composer require bezhansalleh/filament-shield

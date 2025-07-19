@@ -1,0 +1,74 @@
+models:
+  Branch:
+    name: string
+    address: string
+    city: string
+    province: string
+    subdistrict: string
+    village: string
+    warehouses: hasMany Warehouse
+    cashiers: hasMany Cashier
+    couriers: hasMany Courier
+    vehicles: hasMany Vehicle
+
+  Warehouse:
+    name: string
+    type: enum[kelurahan, kota, provinsi]
+    address: string
+    branch: belongsTo Branch
+    checkers: hasMany Checker
+
+  Cashier:
+    user_id: id
+    branch: belongsTo Branch
+    orders: hasMany Order
+
+  Courier:
+    user_id: id
+    branch: belongsTo Branch
+    vehicle: belongsTo Vehicle
+    orders: hasMany Order
+
+  Vehicle:
+    plate_number: string
+    type: enum[mobil_penjemput, mobil_pengantar]
+    branch: belongsTo Branch
+    couriers: hasMany Courier
+
+  Order:
+    code: string
+    customer_name: string
+    customer_phone: string
+    origin_branch: belongsTo Branch
+    destination_branch: belongsTo Branch
+    cashier: belongsTo Cashier
+    courier_pickup: belongsTo Courier
+    courier_delivery: belongsTo Courier
+    vehicle_pickup: belongsTo Vehicle
+    vehicle_delivery: belongsTo Vehicle
+    status: enum[created, picked_up, in_warehouse, in_transit, delivered, completed, cancelled]
+    items: hasMany OrderItem
+    tracking_histories: hasMany TrackingHistory
+
+  OrderItem:
+    order: belongsTo Order
+    name: string
+    quantity: integer
+    condition: string
+    checker: belongsTo Checker
+
+  Checker:
+    user_id: id
+    warehouse: belongsTo Warehouse
+    checked_orders: hasMany OrderItem
+
+  TrackingHistory:
+    order: belongsTo Order
+    status: string
+    location: string
+    checked_by: belongsTo Checker
+    checked_at: timestamp
+    notes: string
+
+controllers:
+  # ...

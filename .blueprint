@@ -1,0 +1,38 @@
+created:
+    - database/factories/BranchFactory.php
+    - database/factories/WarehouseFactory.php
+    - database/factories/CashierFactory.php
+    - database/factories/CourierFactory.php
+    - database/factories/VehicleFactory.php
+    - database/factories/OrderFactory.php
+    - database/factories/OrderItemFactory.php
+    - database/factories/CheckerFactory.php
+    - database/factories/TrackingHistoryFactory.php
+    - database/migrations/2025_07_19_035636_create_branches_table.php
+    - database/migrations/2025_07_19_035637_create_warehouses_table.php
+    - database/migrations/2025_07_19_035638_create_cashiers_table.php
+    - database/migrations/2025_07_19_035639_create_couriers_table.php
+    - database/migrations/2025_07_19_035640_create_vehicles_table.php
+    - database/migrations/2025_07_19_035641_create_orders_table.php
+    - database/migrations/2025_07_19_035642_create_order_items_table.php
+    - database/migrations/2025_07_19_035643_create_checkers_table.php
+    - database/migrations/2025_07_19_035644_create_tracking_histories_table.php
+    - app/Models/Branch.php
+    - app/Models/Warehouse.php
+    - app/Models/Cashier.php
+    - app/Models/Courier.php
+    - app/Models/Vehicle.php
+    - app/Models/Order.php
+    - app/Models/OrderItem.php
+    - app/Models/Checker.php
+    - app/Models/TrackingHistory.php
+models:
+    Branch: { name: string, address: string, city: string, province: string, subdistrict: string, village: string, warehouses: 'hasMany Warehouse', cashiers: 'hasMany Cashier', couriers: 'hasMany Courier', vehicles: 'hasMany Vehicle' }
+    Warehouse: { name: string, type: 'enum[kelurahan, kota, provinsi]', address: string, branch: 'belongsTo Branch', checkers: 'hasMany Checker' }
+    Cashier: { user_id: id, branch: 'belongsTo Branch', orders: 'hasMany Order' }
+    Courier: { user_id: id, branch: 'belongsTo Branch', vehicle: 'belongsTo Vehicle', orders: 'hasMany Order' }
+    Vehicle: { plate_number: string, type: 'enum[mobil_penjemput, mobil_pengantar]', branch: 'belongsTo Branch', couriers: 'hasMany Courier' }
+    Order: { code: string, customer_name: string, customer_phone: string, origin_branch: 'belongsTo Branch', destination_branch: 'belongsTo Branch', cashier: 'belongsTo Cashier', courier_pickup: 'belongsTo Courier', courier_delivery: 'belongsTo Courier', vehicle_pickup: 'belongsTo Vehicle', vehicle_delivery: 'belongsTo Vehicle', status: 'enum[created, picked_up, in_warehouse, in_transit, delivered, completed, cancelled]', items: 'hasMany OrderItem', tracking_histories: 'hasMany TrackingHistory' }
+    OrderItem: { order: 'belongsTo Order', name: string, quantity: integer, condition: string, checker: 'belongsTo Checker' }
+    Checker: { user_id: id, warehouse: 'belongsTo Warehouse', checked_orders: 'hasMany OrderItem' }
+    TrackingHistory: { order: 'belongsTo Order', status: string, location: string, checked_by: 'belongsTo Checker', checked_at: timestamp, notes: string }
