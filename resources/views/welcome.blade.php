@@ -81,9 +81,195 @@
                     </div>
                 </div>
                 <div class="hidden lg:block">
-                    <div class="animate-float">
-                        <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-                             alt="Logistics" class="rounded-2xl shadow-2xl">
+                    <div class="relative w-full h-[400px]">
+                        <!-- Background: simple road and sky, side/front view -->
+                        <svg viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                            <defs>
+                                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#BEE3F8"/>
+                                    <stop offset="100%" stop-color="#90cdf4"/>
+                                </linearGradient>
+                                <linearGradient id="road" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#A0AEC0"/>
+                                    <stop offset="100%" stop-color="#4A5568"/>
+                                </linearGradient>
+                                <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#A7F3D0"/>
+                                    <stop offset="100%" stop-color="#34D399"/>
+                                </linearGradient>
+                                <linearGradient id="cargo-box" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="#F3F4F6"/>
+                                    <stop offset="100%" stop-color="#E5E7EB"/>
+                                </linearGradient>
+                                <linearGradient id="ship-body" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="#60A5FA"/>
+                                    <stop offset="100%" stop-color="#2563EB"/>
+                                </linearGradient>
+                                <linearGradient id="plane-body" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="#F3F4F6"/>
+                                    <stop offset="100%" stop-color="#A0AEC0"/>
+                                </linearGradient>
+                                <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#38BDF8"/>
+                                    <stop offset="100%" stop-color="#0EA5E9"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- Sky -->
+                            <rect width="600" height="400" fill="url(#sky)" />
+                            <!-- Sea (for ship) -->
+                            <rect y="300" width="600" height="40" fill="url(#sea)" opacity="0.85"/>
+                            <!-- Grass -->
+                            <rect y="320" width="600" height="80" fill="url(#grass)" />
+                            <!-- Road (side view, horizontal) -->
+                            <rect y="340" width="600" height="40" fill="url(#road)" />
+                            <!-- Road stripes -->
+                            <g>
+                                <rect x="0" y="358" width="60" height="6" rx="3" fill="#fff" opacity="0.7"/>
+                                <rect x="100" y="358" width="60" height="6" rx="3" fill="#fff" opacity="0.7"/>
+                                <rect x="200" y="358" width="60" height="6" rx="3" fill="#fff" opacity="0.7"/>
+                                <rect x="300" y="358" width="60" height="6" rx="3" fill="#fff" opacity="0.7"/>
+                                <rect x="400" y="358" width="60" height="6" rx="3" fill="#fff" opacity="0.7"/>
+                                <rect x="500" y="358" width="60" height="6" rx="3" fill="#fff" opacity="0.7"/>
+                            </g>
+                            <!-- Simple trees (side view) -->
+                            <g>
+                                <rect x="80" y="300" width="10" height="40" fill="#B45309" />
+                                <ellipse cx="85" cy="295" rx="18" ry="22" fill="#059669" />
+                                <rect x="520" y="310" width="8" height="30" fill="#B45309" />
+                                <ellipse cx="524" cy="305" rx="14" ry="18" fill="#059669" />
+                            </g>
+                            <!-- Simple house (side view) -->
+                            <g>
+                                <rect x="450" y="285" width="38" height="30" fill="#FBBF24" />
+                                <polygon points="450,285 469,265 488,285" fill="#F59E42" />
+                                <rect x="460" y="300" width="10" height="15" fill="#fff" />
+                            </g>
+                            <!-- Animated cargo truck (side view, lebih mirip truk kargo) -->
+                            <g id="truck-group">
+                                <!-- Truck shadow -->
+                                <ellipse id="truck-shadow" cx="0" cy="0" rx="38" ry="12" fill="#000" opacity="0.15"/>
+                                <!-- Cargo box (besar, tinggi, khas truk kargo) -->
+                                <rect id="truck-cargo" x="0" y="-60" width="90" height="48" rx="6" fill="url(#cargo-box)" stroke="#D1D5DB" stroke-width="2"/>
+                                <!-- Cargo box lines (panel-panel pintu belakang) -->
+                                <rect x="10" y="-50" width="20" height="36" fill="#E5E7EB" opacity="0.3"/>
+                                <rect x="35" y="-50" width="20" height="36" fill="#E5E7EB" opacity="0.2"/>
+                                <rect x="60" y="-50" width="20" height="36" fill="#E5E7EB" opacity="0.2"/>
+                                <!-- Truck cabin (lebih kecil, khas truk kargo) -->
+                                <rect id="truck-cabin" x="-38" y="-44" width="38" height="32" rx="6" fill="#2563EB" stroke="#1E40AF" stroke-width="2"/>
+                                <!-- Cabin window -->
+                                <rect id="truck-window" x="-32" y="-38" width="18" height="14" rx="2" fill="#60A5FA" />
+                                <!-- Cabin door line -->
+                                <rect x="-12" y="-44" width="2" height="32" fill="#e5e7eb" opacity="0.5"/>
+                                <!-- Side mirror -->
+                                <rect x="-40" y="-34" width="6" height="4" rx="1" fill="#A0AEC0"/>
+                                <!-- Headlight -->
+                                <ellipse id="truck-light" cx="-40" cy="-28" rx="3" ry="6" fill="#FDE68A" opacity="0.7"/>
+                                <!-- Wheels (besar, khas truk kargo) -->
+                                <circle id="truck-wheel1" cx="-20" cy="10" r="12" fill="#222" stroke="#444" stroke-width="2"/>
+                                <circle id="truck-wheel2" cx="80" cy="10" r="12" fill="#222" stroke="#444" stroke-width="2"/>
+                                <!-- Wheel hubcaps -->
+                                <circle cx="-20" cy="10" r="4" fill="#E5E7EB"/>
+                                <circle cx="80" cy="10" r="4" fill="#E5E7EB"/>
+                                <!-- Mudguard belakang -->
+                                <rect x="78" y="18" width="16" height="4" rx="2" fill="#4B5563"/>
+                                <!-- Mudguard depan -->
+                                <rect x="-32" y="18" width="16" height="4" rx="2" fill="#4B5563"/>
+                                <!-- Bumper depan -->
+                                <rect x="-44" y="-18" width="8" height="16" rx="2" fill="#9CA3AF"/>
+                                <!-- Rear lights -->
+                                <rect x="90" y="-10" width="4" height="8" rx="1" fill="#F87171"/>
+                                <!-- Cargo box shadow (sedikit di bawah box) -->
+                                <ellipse cx="45" cy="12" rx="38" ry="7" fill="#000" opacity="0.08"/>
+                            </g>
+                            <!-- Animated ship (kapal laut) -->
+                            <g id="ship-group">
+                                <!-- Ship shadow -->
+                                <ellipse id="ship-shadow" cx="0" cy="0" rx="32" ry="8" fill="#000" opacity="0.10"/>
+                                <!-- Ship body -->
+                                <rect id="ship-body" x="0" y="0" width="80" height="18" rx="6" fill="url(#ship-body)" stroke="#2563EB" stroke-width="2"/>
+                                <!-- Ship deck -->
+                                <rect x="12" y="-10" width="56" height="10" rx="2" fill="#F3F4F6"/>
+                                <!-- Ship bridge -->
+                                <rect x="54" y="-18" width="14" height="8" rx="2" fill="#A0AEC0"/>
+                                <!-- Ship windows -->
+                                <circle cx="20" cy="-5" r="2" fill="#60A5FA"/>
+                                <circle cx="28" cy="-5" r="2" fill="#60A5FA"/>
+                                <circle cx="36" cy="-5" r="2" fill="#60A5FA"/>
+                                <!-- Ship chimney -->
+                                <rect x="60" y="-22" width="6" height="6" rx="1" fill="#F87171"/>
+                                <!-- Ship bow (front) -->
+                                <polygon points="0,18 0,0 10,9" fill="#2563EB"/>
+                                <!-- Ship stern (back) -->
+                                <polygon points="80,18 80,0 70,9" fill="#2563EB"/>
+                            </g>
+                            <!-- Animated airplane (pesawat) -->
+                            <g id="plane-group">
+                                <!-- Plane shadow -->
+                                <ellipse id="plane-shadow" cx="0" cy="0" rx="18" ry="5" fill="#000" opacity="0.10"/>
+                                <!-- Plane body -->
+                                <rect id="plane-body" x="0" y="0" width="60" height="10" rx="5" fill="url(#plane-body)" stroke="#A0AEC0" stroke-width="1"/>
+                                <!-- Plane nose -->
+                                <ellipse cx="60" cy="5" rx="6" ry="5" fill="#F3F4F6" stroke="#A0AEC0" stroke-width="1"/>
+                                <!-- Plane tail -->
+                                <rect x="0" y="2" width="8" height="6" rx="2" fill="#A0AEC0"/>
+                                <!-- Plane wings -->
+                                <rect x="18" y="-6" width="24" height="6" rx="2" fill="#A0AEC0"/>
+                                <rect x="22" y="10" width="16" height="5" rx="2" fill="#A0AEC0"/>
+                                <!-- Plane window -->
+                                <rect x="50" y="3" width="6" height="4" rx="1" fill="#60A5FA"/>
+                            </g>
+                        </svg>
+                        <script>
+                            // Animasi truk, kapal laut, dan pesawat
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const svg = document.querySelector('.w-full.h-full');
+                                // Truck
+                                const truck = svg.getElementById('truck-group');
+                                const truckShadow = svg.getElementById('truck-shadow');
+                                let truckX = -120;
+                                let truckDir = 1;
+                                // Ship
+                                const ship = svg.getElementById('ship-group');
+                                const shipShadow = svg.getElementById('ship-shadow');
+                                let shipX = 600;
+                                let shipDir = -1;
+                                // Plane
+                                const plane = svg.getElementById('plane-group');
+                                const planeShadow = svg.getElementById('plane-shadow');
+                                let planeX = -80;
+                                let planeY = 60;
+                                let planeDir = 1;
+                                let planeAngle = 0;
+                                function animateAll() {
+                                    // Truck: jalan bolak-balik di jalan raya
+                                    truckX += 1.2 * truckDir;
+                                    if (truckX > 600 + 120) { truckDir = -1; }
+                                    if (truckX < -120) { truckDir = 1; }
+                                    truck.setAttribute('transform', `translate(${truckX},350)`);
+                                    truckShadow.setAttribute('cx', 30);
+                                    truckShadow.setAttribute('cy', 22);
+
+                                    // Ship: bergerak pelan dari kanan ke kiri di laut
+                                    shipX += 0.5 * shipDir;
+                                    if (shipX < -90) { shipX = 600; }
+                                    ship.setAttribute('transform', `translate(${shipX},312)`);
+                                    shipShadow.setAttribute('cx', 40);
+                                    shipShadow.setAttribute('cy', 20);
+
+                                    // Plane: terbang dari kiri ke kanan di langit, sedikit naik-turun
+                                    planeX += 2.1 * planeDir;
+                                    planeAngle = Math.sin(planeX / 60) * 6; // sedikit miring
+                                    planeY = 60 + Math.sin(planeX / 40) * 10;
+                                    if (planeX > 600 + 80) { planeX = -80; }
+                                    plane.setAttribute('transform', `translate(${planeX},${planeY}) rotate(${planeAngle},30,5)`);
+                                    planeShadow.setAttribute('cx', 30);
+                                    planeShadow.setAttribute('cy', 18);
+
+                                    requestAnimationFrame(animateAll);
+                                }
+                                animateAll();
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
