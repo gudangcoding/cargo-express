@@ -16,6 +16,9 @@ class Order extends Model
      */
     protected $fillable = [
         'code',
+        'service_type',
+        'shipping_method',
+        'weight_kg',
         'customer_name',
         'customer_phone',
         'origin_branch',
@@ -39,6 +42,30 @@ class Order extends Model
     {
         return [
             'id' => 'integer',
+            'weight_kg' => 'decimal:2',
+        ];
+    }
+
+    /**
+     * Get the service type options.
+     */
+    public static function getServiceTypeOptions(): array
+    {
+        return [
+            'cargo' => 'Cargo',
+            'parcel' => 'Parcel',
+        ];
+    }
+
+    /**
+     * Get the shipping method options.
+     */
+    public static function getShippingMethodOptions(): array
+    {
+        return [
+            'laut' => 'Laut',
+            'udara' => 'Udara',
+            'darat' => 'Darat',
         ];
     }
 }

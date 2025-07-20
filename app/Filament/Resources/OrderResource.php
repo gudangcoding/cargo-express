@@ -26,6 +26,26 @@ class OrderResource extends Resource
                 Forms\Components\TextInput::make('code')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('service_type')
+                    ->options(Order::getServiceTypeOptions())
+                    ->required()
+                    ->default('cargo')
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        if ($state === 'parcel') {
+                            $set('shipping_method', null);
+                        }
+                    }),
+                Forms\Components\Select::make('shipping_method')
+                    ->options(Order::getShippingMethodOptions())
+                    ->visible(fn (callable $get) => $get('service_type') === 'cargo')
+                    ->required(fn (callable $get) => $get('service_type') === 'cargo'),
+                Forms\Components\TextInput::make('weight_kg')
+                    ->numeric()
+                    ->step(0.01)
+                    ->visible(fn (callable $get) => $get('service_type') === 'parcel')
+                    ->required(fn (callable $get) => $get('service_type') === 'parcel')
+                    ->suffix('kg'),
                 Forms\Components\TextInput::make('customer_name')
                     ->required()
                     ->maxLength(255),
@@ -72,6 +92,28 @@ class OrderResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('code')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('service_type')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'cargo' => 'success',
+                        'parcel' => 'info',
+                    }),
+                Tables\Columns\TextColumn::make('shipping_method')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'laut' => 'blue',
+                        'udara' => 'green',
+                        'darat' => 'orange',
+                    })
+                    ->visible(fn ($record) => $record->service_type === 'cargo'),
+                Tables\Columns\TextColumn::make('weight_kg')
+                    ->numeric(
+                        decimalPlaces: 2,
+                        decimalSeparator: '.',
+                        thousandsSeparator: ',',
+                    )
+                    ->suffix(' kg')
+                    ->visible(fn ($record) => $record->service_type === 'parcel'),
                 Tables\Columns\TextColumn::make('customer_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('customer_phone')
@@ -106,7 +148,11 @@ class OrderResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('service_type')
+                    ->options(Order::getServiceTypeOptions()),
+                Tables\Filters\SelectFilter::make('shipping_method')
+                    ->options(Order::getShippingMethodOptions())
+                    ->visible(fn () => true),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

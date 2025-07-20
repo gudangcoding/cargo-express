@@ -13,7 +13,7 @@ models:
 
   Warehouse:
     name: string
-    type: enum[kelurahan, kota, provinsi]
+    type: enum:kelurahan,kota,provinsi
     address: string
     branch: belongsTo Branch
     checkers: hasMany Checker
@@ -31,7 +31,7 @@ models:
 
   Vehicle:
     plate_number: string
-    type: enum[mobil_penjemput, mobil_pengantar]
+    type: enum:mobil_penjemput, mobil_pengantar
     branch: belongsTo Branch
     couriers: hasMany Courier
 
@@ -46,7 +46,7 @@ models:
     courier_delivery: belongsTo Courier
     vehicle_pickup: belongsTo Vehicle
     vehicle_delivery: belongsTo Vehicle
-    status: enum[created, picked_up, in_warehouse, in_transit, delivered, completed, cancelled]
+    status: enum:created, picked_up, in_warehouse, in_transit, delivered, completed, cancelled
     items: hasMany OrderItem
     tracking_histories: hasMany TrackingHistory
 

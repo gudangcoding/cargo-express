@@ -23,3 +23,111 @@
 10.  php artisan make:filament-relation-manager OrderResource OrderItem code (defauldt ID)
 untuk hak akses cari di menu plugin shield
 11. composer require bezhansalleh/filament-shield
+
+
+layanan akan dibagi 2
+1. cargo (Via Darat,Laut,Udara atau kombinasi)
+2. parcel (Cargo Express Seperti Sicepat)
+
+Pengetahuan Dasar Cargo :
+Metode perhitungan cargo udara :
+Panjang (cm) x Lebar (cm) x Tinggi (cm) / 6000
+Misal: Ukuran barang 50 x 40 x 60 cm = 120,000 / 6000 = 20 kg volumetrik
+Jika berat aktual hanya 10 kg, maka yang digunakan untuk tarif adalah 20 kg karena lebih besar.
+Tarif:
+Misalnya tarif udara Rp15.000/kg → 20 kg x 15.000 = Rp300.000
+
+Metode perhitungan cargo Laut :
+Panjang (m) x Lebar (m) x Tinggi (m)
+1 CBM = 1.000 kg = 1 ton untuk perbandingan tarif
+Ukuran barang: 1,2 m x 1,0 m x 1,5 m = 1.8 CBM
+Jika berat aktual hanya 800 kg → maka yang dihitung adalah CBM (karena 1.8 CBM > 0.8 ton)
+Tarif:
+Misalnya tarif laut Rp750.000/CBM → 1.8 x 750.000 = Rp1.350.000
+
+Metode perhitungan cargo Darat :
+Panjang (cm) x Lebar (cm) x Tinggi (cm) / 4000 atau /6000
+Beberapa ekspedisi lokal memakai pembagi 4000 karena truk lebih sensitif volume daripada berat.
+
+Tabel Pembanding Volume vs Berat
+Jenis Pengiriman	Rumus Volume Berat	Tarif Dihitung Berdasarkan
+Udara (Air Cargo)	(PxLxT)/6000	Mana lebih besar: volume/aktual
+Laut (Sea Cargo)	(PxLxT dalam meter) = CBM	Mana lebih besar: CBM atau berat ton
+Darat (Truck)	(PxLxT)/4000 atau /6000	Mana lebih besar: volume/aktual
+
+Untuk cargo ada 5 bagian input:
+1. Header : pengirim dan penerima
+2. Detail : kapasitas barang kubikasi (PxLxT)
+3. Riwayat biaya bisa single atau kombinasi pengiriman
+4. Tracking pengiriman
+5. Komplain ini akan menerima input dari konsumen dan reaksi balasan dari staff komplain
+
+
+Pengetahuan dasar parcel :
+📦 Konsep Perhitungan Biaya Modal Per Kg (Pulau Jawa)
+1. Komponen Utama Biaya
+Komponen	Penjelasan
+🚛 Sewa Truk	Biaya sewa truk berdasarkan jenis (CDE, CDD, Fuso, Tronton), rute, dan jarak
+🛣️ Biaya Operasional	Bensin, tol, parkir, uang makan, dan uang jalan sopir & helper
+👷 Biaya Karyawan	Honor tim gudang, loading, packing, admin
+📦 Volume atau Berat Total	Total kg atau m³ yang diangkut dalam satu trip
+📐 Overhead (opsional)	Asuransi, penyusutan armada, biaya sistem & kantor
+
+2. Contoh Tarif Sewa Truk di Pulau Jawa (2025 perkiraan lapangan)
+Jenis Truk	Kapasitas	Estimasi Sewa (PPN Include)
+CDE (Engkel)	±2–3 Ton	Rp2.500.000 – Rp4.000.000/trip
+CDD (Double)	±4–5 Ton	Rp3.500.000 – Rp5.500.000/trip
+Fuso	±7–8 Ton	Rp5.000.000 – Rp7.000.000/trip
+Tronton	±12–15 Ton	Rp7.000.000 – Rp10.000.000/trip
+
+📍 Contoh: Jakarta ke Surabaya, 1x trip full
+
+3. Simulasi Perhitungan Biaya Modal per Kg
+Misal kamu pakai Fuso 8 ton dari Jakarta ke Surabaya:
+
+Komponen	Nilai
+Sewa Truk	Rp 6.000.000
+Tol & Bensin	Rp 1.200.000
+Uang Jalan Sopir	Rp 800.000
+Biaya Gudang & Admin	Rp 1.000.000
+Total Biaya	Rp 9.000.000
+Muatan Total (8 ton)	8.000 kg
+Modal per kg	Rp 9.000.000 / 8.000 = Rp 1.125/kg
+
+Kamu bisa bulatkan ke Rp1.200/kg → lalu markup jadi Rp1.500 atau Rp2.000/kg
+
+🛠️ Format Variabel Sistem yang Bisa Kamu Buat
+📥 Input Data:
+Kota asal & tujuan
+
+Jenis truk
+
+Berat total muatan (kg)
+
+Biaya sewa truk (editable)
+
+Biaya operasional tambahan
+
+Target margin (%)
+
+⚙️ Output:
+Biaya modal per kg
+
+Rekomendasi harga jual per kg
+
+Simulasi keuntungan bersih
+
+💡 Tips Tambahan
+Gunakan CBM ke Kg konversi jika kiriman berbasis volume:
+Misalnya 1 CBM = 250 kg (untuk truk) agar kamu tidak rugi angkut barang besar tapi ringan.
+
+Buat sistem min. charge untuk kiriman kecil: misalnya minimal 20 kg/kiriman.
+
+Truk ke daerah seperti Malang, Banyuwangi, Jogja, Purwokerto bisa sedikit lebih mahal dari rute besar seperti Jakarta–Bandung–Surabaya.
+untuk parcel ada 3 bagian input :
+1. header : Detail Pengirim dan penerima No Booking untuk semua kiriman dan nomor resi untuk satu kiriman, 
+    untuk mengatasi kiriman lebih dari 1 tiap konsumen
+2. Detail barang : Kapasitas Barang Berat Kg / Kubikasi (PxLxT) 
+3. Alamat pengiriman : kota asal dan kota tujuan dan biaya berdasarkan pricelist/kg atau konversi kubikasi ke kg
+4. Tracking kiriman
+5. Komplain
