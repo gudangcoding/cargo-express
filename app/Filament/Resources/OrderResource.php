@@ -26,6 +26,9 @@ class OrderResource extends Resource
                 Forms\Components\TextInput::make('code')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Hidden::make('branch_id')
+                    ->default(fn () => filament()->getTenant()->id)
+                    ->required(),
                 Forms\Components\Select::make('service_type')
                     ->options(Order::getServiceTypeOptions())
                     ->required()

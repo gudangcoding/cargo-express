@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\BranchScopeTrait;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory, BranchScopeTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -67,5 +68,10 @@ class Order extends Model
             'udara' => 'Udara',
             'darat' => 'Darat',
         ];
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
 }

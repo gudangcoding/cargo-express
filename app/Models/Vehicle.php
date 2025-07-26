@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\BranchScopeTrait;
 
 class Vehicle extends Model
 {
-    use HasFactory;
+    use HasFactory, BranchScopeTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -31,5 +32,10 @@ class Vehicle extends Model
         return [
             'id' => 'integer',
         ];
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
 }

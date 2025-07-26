@@ -29,9 +29,9 @@ class VehicleResource extends Resource
                 Forms\Components\TextInput::make('type')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('branch')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Hidden::make('branch_id')
+                    ->default(fn () => filament()->getTenant()->id)
+                    ->required(),
                 Forms\Components\TextInput::make('couriers')
                     ->required()
                     ->maxLength(255),

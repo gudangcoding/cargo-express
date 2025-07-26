@@ -46,4 +46,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function branch()
+    {
+        return $this->belongsTo(\App\Models\Branch::class, 'branch_id');
+    }
+
+    public function getTenants()
+    {
+        return $this->branch ? collect([$this->branch]) : collect();
+    }
 }

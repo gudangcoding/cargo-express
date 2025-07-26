@@ -26,9 +26,9 @@ class CourierResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->required(),
-                Forms\Components\TextInput::make('branch')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Hidden::make('branch_id')
+                    ->default(fn () => filament()->getTenant()->id)
+                    ->required(),
                 Forms\Components\TextInput::make('vehicle')
                     ->required()
                     ->maxLength(255),

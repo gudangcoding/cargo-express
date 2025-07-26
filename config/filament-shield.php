@@ -14,7 +14,7 @@ return [
         'cluster' => null,
     ],
 
-    'tenant_model' => null,
+    'tenant_model' => \App\Models\Branch::class,
 
     'auth_provider_model' => [
         'fqcn' => 'App\\Models\\User',

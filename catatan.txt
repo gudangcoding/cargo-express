@@ -20,7 +20,7 @@
 7. php artisan make:filament-user
 8. php artisan filament:optimize-clear dan aktifkan opcache dan zip diserver
 9. php artisan make:filament-resource Customer --generate
-10.  php artisan make:filament-relation-manager OrderResource OrderItem code (defauldt ID)
+10. php artisan make:filament-relation-manager OrderResource OrderItem code (defauldt ID)
 untuk hak akses cari di menu plugin shield
 11. composer require bezhansalleh/filament-shield
 

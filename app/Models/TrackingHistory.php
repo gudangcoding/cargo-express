@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\BranchScopeTrait;
 
 class TrackingHistory extends Model
 {
-    use HasFactory;
+    use HasFactory, BranchScopeTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -34,5 +35,10 @@ class TrackingHistory extends Model
             'id' => 'integer',
             'checked_at' => 'timestamp',
         ];
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
 }
